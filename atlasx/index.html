@@ -1,1 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ATLASX</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: black;
+      color: white;
+      font-family: monospace;
+      cursor: url("../webcursor.png"), auto;
+    }
 
+    #entry-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #entry-screen p {
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    #atlasx-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 5rem;
+      color: #ff006f;
+      z-index: 10;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .atlasx-img {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      pointer-events: none;
+      animation: float 6s infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+      100% { transform: translateY(0px) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div id="entry-screen">
+    <p>> Atlasx Page <</p>
+  </div>
+
+  <h1 id="atlasx-title" style="display: none;">ATLASX!!!</h1>
+
+  <audio id="bgm" loop>
+    <source src="../yess.mp4" type="audio/mp4">
+  </audio>
+
+  <script>
+    const avatar = "https://images-ext-1.discordapp.net/external/e7sLA3tpKAYFwHZZwoTsV9NLnset80jrRIkGny_ZV8g/%3Fsize%3D4096/https/cdn.discordapp.com/avatars/293096218677215234/a_0a64d65fbc69a4fe97f6755d8f2b5289.gif?width=221&height=221";
+    
+    for (let i = 0; i < 100; i++) {
+      const img = document.createElement("img");
+      img.src = avatar;
+      img.className = "atlasx-img";
+      img.style.top = Math.random() * 100 + "vh";
+      img.style.left = Math.random() * 100 + "vw";
+      img.style.animationDelay = Math.random() * 3 + "s";
+      img.style.display = "none";
+      document.body.appendChild(img);
+    }
+
+    const entry = document.getElementById("entry-screen");
+    const title = document.getElementById("atlasx-title");
+    const audio = document.getElementById("bgm");
+
+    entry.addEventListener("click", () => {
+      entry.style.display = "none";
+      title.style.display = "block";
+      document.querySelectorAll(".atlasx-img").forEach(img => img.style.display = "block");
+      audio.play();
+    });
+  </script>
+</body>
+</html>
