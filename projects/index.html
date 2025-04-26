@@ -33,18 +33,20 @@
       border: 1px solid #333;
       border-radius: 12px;
       overflow: hidden;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
       max-width: 250px;
       margin: 0 auto;
     }
 
     .card:hover {
       transform: scale(1.03);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
 
     .card img {
       width: 100%;
-      height: auto;
+      height: 200px; /* Set a fixed height */
+      object-fit: cover; /* Make the image cover the entire area without distortion */
       display: block;
     }
 
