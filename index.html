@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Viod.wtf</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    @font-face {
+      font-family: 'FiraCode';
+      src: url('https://fonts.cdnfonts.com/s/23206/FiraCode-Regular.woff') format('woff');
+    }
+  </style>
+</head>
+<body>
+  <div id="entry-screen">
+    <p>>Enter World<</p>
+  </div>
+
+  <div id="main" style="display: none;">
+    <video id="bg-video" autoplay muted loop>
+      <source src="yes.mp4" type="video/mp4">
+    </video>
+    <audio id="bg-audio" src="yes.mp4" loop></audio>
+
+    <div class="content">
+      <nav>
+        <a href="#" class="active">Home</a>
+        <a href="https://discord.gg/viod" target="_blank">Projects</a>
+        <a href="https://discordapp.com/users/1361777368930189503">Contact</a>
+        <a href="#" id="donateBtn">Donate</a>
+      </nav>
+
+      <h1>print("Hello World!")</h1>
+      <div class="typewriter" id="typewriter"></div>
+
+      <img src="Viod.png" alt="viod" class="main-pfp" />
+
+      <h2 class="site-name">Viod.wtf</h2>
+      <p class="new-status">whatever you do will always find a way of coming back to you</p>
+    </div>
+
+    <div class="donation-popup" id="donationPopup">
+      <span class="close-btn" id="closePopup">✕</span>
+      <p>LTC addy:</p>
+      <input type="text" value="0xe0bc262d090958C5FfD14586B8d4ed49abe06df7" id="ltcAddress" readonly />
+      <button id="copyBtn">Copy</button>
+      <p id="copyConfirm" class="hidden">Copied!</p>
+    </div>
+  </div>
+
+  <audio id="click-sfx">
+    <source src="click-sfx.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    const entryScreen = document.getElementById('entry-screen');
+    const main = document.getElementById('main');
+    const audio = document.getElementById('bg-audio');
+    const clickSfx = document.getElementById('click-sfx');
+
+    entryScreen.addEventListener('click', () => {
+      clickSfx.play(); // Play the click sound effect
+      entryScreen.style.display = 'none';
+      main.style.display = 'block';
+      audio.play();
+    });
+
+    const texts = [
+      "hi im a developer",
+      "im cool ig",
+      "im not femboy",
+      "hii atlasx if your reading this",
+      "i promise im trying.",
+      "dont give up",
+      "im there for you."
+    ];
+    let count = 0;
+    let index = 0;
+    let currentText = '';
+    let letter = '';
+
+    (function type() {
+      if (count === texts.length) count = 0;
+      currentText = texts[count];
+      letter = currentText.slice(0, ++index);
+      if (currentText.includes("atlasx") && letter.length === currentText.length) {
+        document.getElementById('typewriter').innerHTML = currentText.replace("atlasx", "<span id='atlasxLink' style='color:#0ff;cursor:pointer;'>atlasx</span>");
+        document.getElementById('atlasxLink').onclick = () => window.location.href = '/atlasx';
+      } else {
+        document.getElementById('typewriter').textContent = letter;
+      }
+      if (letter.length === currentText.length) {
+        setTimeout(() => {
+          index = 0;
+          count++;
+          type();
+        }, 2000);
+      } else {
+        setTimeout(type, 100);
+      }
+    })();
+
+    const donateBtn = document.getElementById('donateBtn');
+    const donationPopup = document.getElementById('donationPopup');
+    const closePopup = document.getElementById('closePopup');
+    const copyBtn = document.getElementById('copyBtn');
+    const ltcAddress = document.getElementById('ltcAddress');
+    const copyConfirm = document.getElementById('copyConfirm');
+
+    donateBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      donationPopup.classList.add('active');
+    });
+
+    closePopup.addEventListener('click', () => {
+      donationPopup.classList.remove('active');
+      copyConfirm.classList.add('hidden');
+    });
+
+    copyBtn.addEventListener('click', () => {
+      ltcAddress.select();
+      document.execCommand('copy');
+      copyConfirm.classList.remove('hidden');
+      setTimeout(() => copyConfirm.classList.add('hidden'), 2000);
+    });
+  </script>
+</body>
+<script>
+  fetch(window.location.href, { method: 'HEAD' })
+    .then(response => {
+      if (!response.ok) {
+        window.location.href = '/404/index.html';
+      }
+    })
+    .catch(() => {
+      window.location.href = '/404/index.html';
+    });
+</script>
+</html>
