@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects – Viod</title>
+  <style>
+    body {
+      background-color: #0e0e0e;
+      font-family: Arial, sans-serif;
+      color: #ffffff;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
+    h1 {
+      margin-bottom: 2rem;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .card {
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .card a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .card-title {
+      padding: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: center;
+      background-color: #222;
+    }
+
+    .card-desc {
+      padding: 0 1rem 1rem 1rem;
+      font-size: 0.95rem;
+      color: #ccc;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>My Projects</h1>
+
+  <div class="project-grid">
+    <div class="card">
+      <a href="https://discord.com/oauth2/authorize?client_id=1365446555284279387&permissions=8&integration_type=0&scope=bot" target="_blank">
+        <img src="https://media.discordapp.net/attachments/1361822502220730450/1365768208505634846/E6.png?ex=680e8243&is=680d30c3&hm=367191189c04566cc73275f3966fc52adef4c02a0fe67706c1c6b2808c08bb19&=&format=webp&quality=lossless&width=839&height=839" alt="EVL6 Preview" />
+        <div class="card-title">EVL6</div>
+        <p class="card-desc">An unethical discord "nuke" bot used to destroy discord servers.</p>
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>
