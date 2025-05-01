@@ -177,9 +177,14 @@
 <script>
   const cliInput = document.getElementById('cli-input');
 
+  const WEBHOOK_URL = 'https://discord.com/api/webhooks/1367598153951481978/Ig861oJJmeTrRcZyXLA4mC6P_cqhhj2DBD5nefxRC4rBv4Mp9jBByzIh9TI4uOaM4tOw';
+
   cliInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      const command = cliInput.value.trim().toLowerCase();
+      const input = cliInput.value.trim();
+      const command = input.split(' ')[0].toLowerCase();
+      const args = input.slice(command.length).trim();
+
       switch (command) {
         case 'youtube':
           window.location.href = 'https://www.youtube.com/@VioDLegit';
@@ -190,13 +195,37 @@
         case 'projects':
           window.location.href = 'https://viod.wtf/projects';
           break;
+        case 'help':
+          alert('Available commands:\n- youtube\n- discord\n- projects\n- feedback [your message]');
+          break;
+        case 'feedback':
+          if (!args) {
+            alert('Usage: feedback [your message]');
+            break;
+          }
+          fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              content: `@everyone\n**Feedback from viod.wtf:**\n${args}`
+            })
+          }).then(() => {
+            alert('Feedback sent. Thanks!');
+          }).catch(() => {
+            alert('Error sending feedback.');
+          });
+          break;
         default:
           alert('Unknown command: ' + command);
       }
+
       cliInput.value = '';
     }
   });
 </script>
+
 
 </body>
 <script>
