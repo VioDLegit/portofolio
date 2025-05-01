@@ -133,6 +133,71 @@
       setTimeout(() => copyConfirm.classList.add('hidden'), 2000);
     });
   </script>
+  <div id="cli-container">
+  <span class="prompt">></span>
+  <input type="text" id="cli-input" placeholder="Type a command..." autocomplete="off" />
+</div>
+
+<style>
+  #cli-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0,0,0,0.85);
+    color: #0f0;
+    font-family: 'FiraCode', monospace;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    z-index: 1000;
+  }
+
+  #cli-container .prompt {
+    margin-right: 10px;
+  }
+
+  #cli-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #0f0;
+    font-size: 1em;
+    flex: 1;
+    font-family: 'FiraCode', monospace;
+  }
+
+  @media (max-width: 768px) {
+    #cli-input {
+      font-size: 1em;
+    }
+  }
+</style>
+
+<script>
+  const cliInput = document.getElementById('cli-input');
+
+  cliInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const command = cliInput.value.trim().toLowerCase();
+      switch (command) {
+        case 'youtube':
+          window.location.href = 'https://www.youtube.com/@VioDLegit';
+          break;
+        case 'discord':
+          window.location.href = 'https://discordapp.com/users/1361777368930189503';
+          break;
+        case 'projects':
+          window.location.href = 'https://viod.wtf/projects';
+          break;
+        default:
+          alert('Unknown command: ' + command);
+      }
+      cliInput.value = '';
+    }
+  });
+</script>
+
 </body>
 <script>
   fetch(window.location.href, { method: 'HEAD' })
