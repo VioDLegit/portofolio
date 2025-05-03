@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: white;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #555;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+        }
+        td {
+            background-color: #222;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #5c6bc0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3f4c8b;
+        }
+        .icon {
+            cursor: pointer;
+            color: #f44336;
+            font-size: 20px;
+            padding: 5px;
+        }
+        .copy-button {
+            background-color: #4caf50;
+            color: white;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Welcome to the main dashboard</h2>
+    <h3>Logs</h3>
+    <table id="visitorTable">
+        <thead>
+            <tr>
+                <th>IP Address</th>
+                <th>Timestamp</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        const ipTableBody = document.querySelector("#visitorTable tbody");
+
+        function getIP() {
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const visitorIP = data.ip;
+                    const timestamp = new Date().toLocaleString();
+                    let ipLog = JSON.parse(localStorage.getItem('ipLog')) || [];
+                    ipLog.push({ ip: visitorIP, timestamp: timestamp });
+                    localStorage.setItem('ipLog', JSON.stringify(ipLog));
+                    updateTable();
+                })
+                .catch(error => console.error("Error fetching IP:", error));
+        }
+
+        function updateTable() {
+            const ipLog = JSON.parse(localStorage.getItem('ipLog')) || [];
+            ipTableBody.innerHTML = "";
+            ipLog.forEach((entry, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${entry.ip}</td>
+                    <td>${entry.timestamp}</td>
+                    <td>
+                        <button class="icon" onclick="deleteIP(${index})">🗑️</button>
+                        <button class="copy-button" onclick="copyIP('${entry.ip}')">Copy IP</button>
+                    </td>
+                `;
+                ipTableBody.appendChild(row);
+            });
+        }
+
+        function deleteIP(index) {
+            let ipLog = JSON.parse(localStorage.getItem('ipLog')) || [];
+            ipLog.splice(index, 1);
+            localStorage.setItem('ipLog', JSON.stringify(ipLog));
+            updateTable();
+        }
+
+        function copyIP(ip) {
+            navigator.clipboard.writeText(ip)
+                .then(() => {
+                    alert(`IP ${ip} copied to clipboard!`);
+                })
+                .catch(err => {
+                    console.error('Failed to copy IP:', err);
+                });
+        }
+
+        getIP();
+    </script>
+
+</body>
+</html>
