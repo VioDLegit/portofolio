@@ -230,35 +230,5 @@
 
 
 </body>
-<script>
-  fetch(window.location.href, { method: 'HEAD' })
-    .then(response => {
-      if (!response.ok) {
-        window.location.href = '/404/index.html';
-      }
-    })
-    .catch(() => {
-      window.location.href = '/404/index.html';
-    });
-  <script>
-  document.addEventListener('keydown', function (e) {
-    if (e.ctrlKey && e.key === 'u') {
-      e.preventDefault();
-      alert("Feature is disabled.");
-    }
-
-    if (e.key === 'F12') {
-      e.preventDefault();
-      alert("Feature is disabled.");
-    }
-  });
-
-  document.addEventListener('contextmenu', function (e) {
-    e.preventDefault();
-    alert("Feature is Disabled.");
-  });
-</script>
-</script>
-
 </script>
 </html>
