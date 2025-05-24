@@ -1,30 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Discord Webhook Spammer</title>
+  <meta charset="UTF-8">
+  <title>Discord Webhook Tool</title>
   <link rel="stylesheet" href="static/hookstyle.css">
 </head>
 <body>
+  <div class="container">
+    <h2>Webhook Configuration</h2>
+    <input type="text" id="webhook" placeholder="Webhook URL">
+    
+    <div class="flex">
+      <input type="text" id="username" placeholder="Custom Bot Name">
+      <input type="text" id="avatar" placeholder="Avatar URL">
+    </div>
 
-  <h2>Webhook Configuration</h2>
-  <input type="text" id="webhook" placeholder="Webhook URL">
-  
-  <div class="flex">
-    <input type="text" id="username" placeholder="Custom Bot Name">
-    <input type="text" id="avatar" placeholder="Avatar URL">
+    <textarea id="message" placeholder="Message..."></textarea>
+    <input type="number" id="delay" placeholder="Delay (ms)">
+
+    <div class="flex">
+      <button onclick="startSending()">Start</button>
+      <button class="stop" onclick="stopSending()">Stop</button>
+    </div>
+
+    <div id="popup">Error sending webhook<br>Error: 404</div>
   </div>
 
-  <textarea id="message" placeholder="Message..."></textarea>
-  <input type="number" id="delay" placeholder="Delay (ms)">
+  <script>
+    let interval;
 
-  <div class="flex">
-    <button onclick="startSending()">Start</button>
-    <button onclick="stopSending()">Stop</button>
-  </div>
+    function sendMessage() {
+      const webhook = document.getElementById('webhook').value.trim();
+      const username = document.getElementById('username').value.trim();
+      const avatar = document.getElementById('avatar').value.trim();
+      const message = document.getElementById('message').value;
 
-  <div id="popup">Error sending webhook<br>Error: 404</div>
+      fetch(webhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: message,
+          username: username || undefined,
+          avatar_url: avatar || undefined
+        })
+      })
+      .then(res => {
+        if (res.status === 404) {
+          document.getElementById('popup').style.display = 'block';
+          stopSending();
+        }
+      })
+      .catch(() => {
+        document.getElementById('popup').style.display = 'block';
+        stopSending();
+      });
+    }
 
-  <script src="send.js"></script>
+    function startSending() {
+      document.getElementById('popup').style.display = 'none';
+      const delay = parseInt(document.getElementById('delay').value);
+      if (interval) clearInterval(interval);
+      interval = setInterval(sendMessage, delay || 1000);
+    }
+
+    function stopSending() {
+      if (interval) clearInterval(interval);
+    }
+  </script>
 </body>
 </html>
-
