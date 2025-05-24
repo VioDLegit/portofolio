@@ -1,1 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Discord Webhook Spammer</title>
+  <link rel="stylesheet" href="static/hookstyle.css">
+</head>
+<body>
+
+  <h2>Webhook Configuration</h2>
+  <input type="text" id="webhook" placeholder="Webhook URL">
+  
+  <div class="flex">
+    <input type="text" id="username" placeholder="Custom Bot Name">
+    <input type="text" id="avatar" placeholder="Avatar URL">
+  </div>
+
+  <textarea id="message" placeholder="Message..."></textarea>
+  <input type="number" id="delay" placeholder="Delay (ms)">
+
+  <div class="flex">
+    <button onclick="startSending()">Start</button>
+    <button onclick="stopSending()">Stop</button>
+  </div>
+
+  <div id="popup">Error sending webhook<br>Error: 404</div>
+
+  <script src="send.js"></script>
+</body>
+</html>
 
